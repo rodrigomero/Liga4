@@ -53,4 +53,27 @@ export class Board {
         return map;
     }
 
+    renderMap(container) {
+        container.innerText = "";
+
+        for(let indexColuna = 0; indexColuna < this._columns; indexColuna++){
+
+            const column = document.createElement("div");
+            column.classList.add("column");
+            column.style.width = `${100/this._columns}%`;
+            column.dataset.column = indexColuna;
+            column.addEventListener("click", () => {"Adicionaremos"});
+
+            for(let indexLinha = 0; indexLinha < this._rows; indexLinha++){
+
+                const celula = document.createElement("div");
+                celula.classList.add("cell");
+                celula.style.height = `${100/this._rows}%`;
+                celula.dataset.row = indexLinha;
+                column.appendChild(celula);
+            }
+
+            container.appendChild(column);
+        }
+    }
 }
