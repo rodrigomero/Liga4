@@ -1,3 +1,5 @@
+import { Cell } from "./cell_model.js"
+
 export class Board {
     constructor( columns, rows, players) {
         this._columns = columns,
@@ -50,6 +52,7 @@ export class Board {
         for(let i = 0; i < this._rows; i++) {
             map.push(new Array(this._columns));
         }
+
         return map;
     }
 
@@ -62,7 +65,7 @@ export class Board {
             column.classList.add("column");
             column.style.width = `${100/this._columns}%`;
             column.dataset.column = indexColuna;
-            column.addEventListener("click", () => {"Adicionaremos"});
+            column.addEventListener("click", () => {this.handleClick(indexColuna)});
 
             for(let indexLinha = 0; indexLinha < this._rows; indexLinha++){
 
@@ -75,5 +78,33 @@ export class Board {
 
             container.appendChild(column);
         }
+    }
+
+    switchPlayer() {
+        
+        if(this.currentPlayer === this.players[0]){
+            this.currentPlayer = this.players[1]
+        }else{
+            this.currentPlayer = this.players[0]
+        }
+    }
+
+    handleClick(column) {
+        let row = this.map.findIndex(row => {
+            console.log(row === column)
+            return row[column]
+        });
+
+        if(row === -1) {
+            row = this.rows;
+        }
+        console.log(row)
+        this.map[row - 1][column] = this.currentPlayer;
+
+        const cell = new Cell(column, row, this.currentPlayer.className);
+
+        cell.render();
+
+        this.switchPlayer();
     }
 }

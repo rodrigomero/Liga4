@@ -28,7 +28,9 @@ export class Cell {
         throw 'Cant change this value'
     }
     render() {
+        // console.log(this.coluna, this.linha)
         const div = document.querySelector(`.column[data-column="${this.coluna}"] > .cell[data-row="${this.linha - 1}"]`);
+        // console.log(div)
         div.innerText = "";
 
         const playerDiv = document.createElement("div");
