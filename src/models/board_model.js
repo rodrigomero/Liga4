@@ -91,20 +91,47 @@ export class Board {
 
     handleClick(column) {
         let row = this.map.findIndex(row => {
-            console.log(row === column)
             return row[column]
         });
 
         if(row === -1) {
             row = this.rows;
         }
-        console.log(row)
         this.map[row - 1][column] = this.currentPlayer;
 
         const cell = new Cell(column, row, this.currentPlayer.className);
 
         cell.render();
-
+        if(this.isWinnableMove(column,row-1)) {
+            console.log(`${this.currentPlayer.name} ganhou`)
+        }
         this.switchPlayer();
     }
+
+    isWinnableMove(column, row) {
+        return this.checkVertical(column, row)
+    }
+
+    checkVertical (column, row) {
+        let end = row + 3;
+
+        if(end >= this.rows){
+            end = this.rows - 1;
+        }
+
+        let counter = 0;
+        for(let index = row; index <= end; index++) {
+            if(this.map[index][column] === this.currentPlayer) {
+                counter++;
+            }else {
+                counter = 0;
+            }
+            if (counter ===4 ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
